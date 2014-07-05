@@ -12,6 +12,8 @@ public class ColorManager {
 
 	protected Map fColorTable = new HashMap(10);
 
+	private String teste;
+	
 	public void dispose() {
 		Iterator e = fColorTable.values().iterator();
 		while (e.hasNext())
