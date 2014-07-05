@@ -8,20 +8,20 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
-public class ColorManager {
+public class VisualGColorManager {
 
-	protected Map fColorTable = new HashMap(10);
+	protected Map mColorMap = new HashMap(10);
 
 	public void dispose() {
-		Iterator e = fColorTable.values().iterator();
+		Iterator e = mColorMap.values().iterator();
 		while (e.hasNext())
 			 ((Color) e.next()).dispose();
 	}
 	public Color getColor(RGB rgb) {
-		Color color = (Color) fColorTable.get(rgb);
+		Color color = (Color) mColorMap.get(rgb);
 		if (color == null) {
 			color = new Color(Display.getCurrent(), rgb);
-			fColorTable.put(rgb, color);
+			mColorMap.put(rgb, color);
 		}
 		return color;
 	}
