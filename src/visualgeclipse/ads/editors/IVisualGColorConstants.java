@@ -2,7 +2,7 @@ package visualgeclipse.ads.editors;
 
 import org.eclipse.swt.graphics.RGB;
 
-public interface IXMLColorConstants {
+public interface IVisualGColorConstants {
 	RGB XML_COMMENT = new RGB(128, 0, 0);
 	RGB PROC_INSTR = new RGB(128, 128, 128);
 	RGB STRING = new RGB(0, 128, 0);
