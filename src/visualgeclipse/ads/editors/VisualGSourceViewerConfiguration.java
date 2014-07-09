@@ -5,6 +5,8 @@ import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.jface.text.reconciler.IReconciler;
+import org.eclipse.jface.text.reconciler.MonoReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -13,11 +15,13 @@ import org.eclipse.swt.graphics.Color;
 
 public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration {
 
+	private VisualGEditor mEditor;
 	private VisualGDoubleClickStrategy mDoubleClickStrategy;
 	private VisualGScanner mScanner;
 	private VisualGColorManager mColorManager;
 
-	public VisualGSourceViewerConfiguration(VisualGColorManager colorManager) {
+	public VisualGSourceViewerConfiguration(VisualGEditor editor, VisualGColorManager colorManager) {
+		this.mEditor = editor;
 		this.mColorManager = colorManager;
 		createScanner();
 	}
@@ -48,6 +52,15 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		}
 	}
 
+	@Override
+	public IReconciler getReconciler(ISourceViewer sourceViewer) {
+        VisualGReconcilingStrategy strategy = new VisualGReconcilingStrategy();
+        strategy.setEditor(mEditor);
+        
+        MonoReconciler reconciler = new MonoReconciler(strategy, false);
+        return reconciler;
+	}
+	
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
 
