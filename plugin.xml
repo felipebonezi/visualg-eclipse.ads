@@ -5,12 +5,12 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            name="Sample XML Editor"
-            extensions="xml"
+            name="VisualG Editor"
+            extensions="alg"
             icon="icons/sample.gif"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            class="visualgeclipse.ads.editors.XMLEditor"
-            id="visualgeclipse.ads.editors.XMLEditor">
+            class="visualgeclipse.ads.editors.VisualGEditor"
+            id="visualgeclipse.ads.editors.VisualGEditor">
       </editor>
    </extension>
 
