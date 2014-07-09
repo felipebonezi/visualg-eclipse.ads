@@ -8,7 +8,7 @@ public class VisualGScanner extends RuleBasedScanner {
 	private static final String[] VG_RESERVED_WORDS = {
 			"algoritmo",
 			"inicio",
-			"fim"
+			"fimalgoritmo"
 	};
 
 	public VisualGScanner(VisualGColorManager manager) {

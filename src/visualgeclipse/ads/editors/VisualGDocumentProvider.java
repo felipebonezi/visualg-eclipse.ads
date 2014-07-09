@@ -16,8 +16,7 @@ public class VisualGDocumentProvider extends FileDocumentProvider {
 					new VisualGPartitionScanner(),
 					new String[] {
 						VisualGPartitionScanner.VG_COMMENT,
-						VisualGPartitionScanner.VG_STRING,
-						VisualGPartitionScanner.VG_RESERVED_WORD });
+						VisualGPartitionScanner.VG_STRING });
 			partitioner.connect(document);
 			document.setDocumentPartitioner(partitioner);
 		}

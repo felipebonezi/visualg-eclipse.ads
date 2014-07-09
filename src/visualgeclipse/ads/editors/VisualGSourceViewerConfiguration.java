@@ -6,6 +6,7 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
+import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -58,7 +59,14 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getVisualGScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-
+		
+		NonRuleBasedDamagerRepairer ndrC =
+				new NonRuleBasedDamagerRepairer(
+					new TextAttribute(
+						colorManager.getColor(IVisualGColorConstants.COMMENT)));
+			reconciler.setDamager(ndrC, VisualGPartitionScanner.VG_COMMENT);
+			reconciler.setRepairer(ndrC, VisualGPartitionScanner.VG_COMMENT);
+		
 		NonRuleBasedDamagerRepairer ndr =
 			new NonRuleBasedDamagerRepairer(
 				new TextAttribute(
@@ -67,6 +75,11 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		reconciler.setRepairer(ndr, VisualGPartitionScanner.VG_STRING);
 
 		return reconciler;
+	}
+
+	private ITokenScanner getVisualGCommentScanner() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

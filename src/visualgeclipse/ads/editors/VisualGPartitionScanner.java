@@ -10,10 +10,12 @@ public class VisualGPartitionScanner extends RuleBasedPartitionScanner {
 	
 	public VisualGPartitionScanner() {
 		IToken visualGstring = new Token(VG_STRING);
+		IToken visualGComment = new Token(VG_COMMENT);
 
-		IPredicateRule[] rules = new IPredicateRule[1];
+		IPredicateRule[] rules = new IPredicateRule[2];
 
 		rules[0] = new SingleLineRule("\"", "\"", visualGstring, '\\');
+		rules[1] = new SingleLineRule("//", null, visualGComment, '\\');
 
 		setPredicateRules(rules);
 	}
