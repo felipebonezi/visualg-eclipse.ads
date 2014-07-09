@@ -3,9 +3,8 @@ package visualgeclipse.ads.editors;
 import org.eclipse.swt.graphics.RGB;
 
 public interface IVisualGColorConstants {
-	RGB COMMENT = new RGB(128, 0, 0);
-	RGB PROC_INSTR = new RGB(128, 128, 128);
+	RGB COMMENT = new RGB(128, 64, 128);
+	RGB RESERVED_WORD = new RGB(128, 0, 0);
 	RGB STRING = new RGB(0, 128, 0);
 	RGB DEFAULT = new RGB(0, 0, 0);
-	RGB TAG = new RGB(0, 0, 128);
 }

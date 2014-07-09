@@ -6,19 +6,20 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
-import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.swt.graphics.Color;
 
 public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration {
 
-	private VisualGDoubleClickStrategy doubleClickStrategy;
-	private VisualGScanner scanner;
-	private VisualGColorManager colorManager;
+	private VisualGDoubleClickStrategy mDoubleClickStrategy;
+	private VisualGScanner mScanner;
+	private VisualGColorManager mColorManager;
 
 	public VisualGSourceViewerConfiguration(VisualGColorManager colorManager) {
-		this.colorManager = colorManager;
+		this.mColorManager = colorManager;
+		createScanner();
 	}
 	
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
@@ -29,57 +30,44 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 			VisualGPartitionScanner.VG_RESERVED_WORD };
 	}
 	
-	public ITextDoubleClickStrategy getDoubleClickStrategy(
-		ISourceViewer sourceViewer,
-		String contentType) {
-		if (doubleClickStrategy == null)
-			doubleClickStrategy = new VisualGDoubleClickStrategy();
-		return doubleClickStrategy;
+	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer, String contentType) {
+		if (mDoubleClickStrategy == null) {
+			mDoubleClickStrategy = new VisualGDoubleClickStrategy();
+		}
+		
+		return mDoubleClickStrategy;
 	}
 
-	protected VisualGScanner getVisualGScanner() {
-		if (scanner == null) {
-			scanner = new VisualGScanner(colorManager);
-			scanner.setDefaultReturnToken(
+	private void createScanner() {
+		if (mScanner == null) {
+			mScanner = new VisualGScanner(mColorManager);
+			mScanner.setDefaultReturnToken(
 				new Token(
 					new TextAttribute(
-						colorManager.getColor(IVisualGColorConstants.DEFAULT))));
+						mColorManager.getColor(IVisualGColorConstants.DEFAULT))));
 		}
-		return scanner;
 	}
 
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
 
-//		DefaultDamagerRepairer dr =
-//			new DefaultDamagerRepairer(getXMLTagScanner());
-//		reconciler.setDamager(dr, XMLPartitionScanner.XML_TAG);
-//		reconciler.setRepairer(dr, XMLPartitionScanner.XML_TAG);
-
-		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getVisualGScanner());
+		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(mScanner);
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		
-		NonRuleBasedDamagerRepairer ndrC =
-				new NonRuleBasedDamagerRepairer(
-					new TextAttribute(
-						colorManager.getColor(IVisualGColorConstants.COMMENT)));
-			reconciler.setDamager(ndrC, VisualGPartitionScanner.VG_COMMENT);
-			reconciler.setRepairer(ndrC, VisualGPartitionScanner.VG_COMMENT);
+		Color commentColor = mColorManager.getColor(IVisualGColorConstants.COMMENT);
+		TextAttribute commentAttribute = new TextAttribute(commentColor);
+		NonRuleBasedDamagerRepairer ndrC = new NonRuleBasedDamagerRepairer(commentAttribute);
+		reconciler.setDamager(ndrC, VisualGPartitionScanner.VG_COMMENT);
+		reconciler.setRepairer(ndrC, VisualGPartitionScanner.VG_COMMENT);
 		
-		NonRuleBasedDamagerRepairer ndr =
-			new NonRuleBasedDamagerRepairer(
-				new TextAttribute(
-					colorManager.getColor(IVisualGColorConstants.STRING)));
+		Color stringColor = mColorManager.getColor(IVisualGColorConstants.STRING);
+		TextAttribute stringAttribute = new TextAttribute(stringColor);
+		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(stringAttribute);
 		reconciler.setDamager(ndr, VisualGPartitionScanner.VG_STRING);
 		reconciler.setRepairer(ndr, VisualGPartitionScanner.VG_STRING);
 
 		return reconciler;
-	}
-
-	private ITokenScanner getVisualGCommentScanner() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

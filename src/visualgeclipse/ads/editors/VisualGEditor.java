@@ -4,7 +4,6 @@ import org.eclipse.ui.editors.text.TextEditor;
 
 public class VisualGEditor extends TextEditor {
 	
-	private VisualGScanner mScanner;
 	private VisualGColorManager colorManager;
 
 	public VisualGEditor() {

@@ -3,7 +3,8 @@ package visualgeclipse.ads.editors;
 import org.eclipse.jface.text.*;
 
 public class VisualGDoubleClickStrategy implements ITextDoubleClickStrategy {
-	protected ITextViewer fText;
+	
+	private ITextViewer mText;
 
 	public void doubleClicked(ITextViewer part) {
 		int pos = part.getSelectedRange().x;
@@ -11,14 +12,14 @@ public class VisualGDoubleClickStrategy implements ITextDoubleClickStrategy {
 		if (pos < 0)
 			return;
 
-		fText = part;
+		mText = part;
 
 		if (!selectComment(pos)) {
 			selectWord(pos);
 		}
 	}
 	protected boolean selectComment(int caretPos) {
-		IDocument doc = fText.getDocument();
+		IDocument doc = mText.getDocument();
 		int startPos, endPos;
 
 		try {
@@ -58,7 +59,7 @@ public class VisualGDoubleClickStrategy implements ITextDoubleClickStrategy {
 
 			int offset = startPos + 1;
 			int len = endPos - offset;
-			fText.setSelectedRange(offset, len);
+			mText.setSelectedRange(offset, len);
 			return true;
 		} catch (BadLocationException x) {
 		}
@@ -67,7 +68,7 @@ public class VisualGDoubleClickStrategy implements ITextDoubleClickStrategy {
 	}
 	protected boolean selectWord(int caretPos) {
 
-		IDocument doc = fText.getDocument();
+		IDocument doc = mText.getDocument();
 		int startPos, endPos;
 
 		try {
@@ -107,6 +108,6 @@ public class VisualGDoubleClickStrategy implements ITextDoubleClickStrategy {
 	private void selectRange(int startPos, int stopPos) {
 		int offset = startPos + 1;
 		int length = stopPos - offset;
-		fText.setSelectedRange(offset, length);
+		mText.setSelectedRange(offset, length);
 	}
 }

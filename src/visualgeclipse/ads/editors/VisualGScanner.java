@@ -2,6 +2,7 @@ package visualgeclipse.ads.editors;
 
 import org.eclipse.jface.text.rules.*;
 import org.eclipse.jface.text.*;
+import org.eclipse.swt.graphics.Color;
 
 public class VisualGScanner extends RuleBasedScanner {
 	
@@ -12,34 +13,17 @@ public class VisualGScanner extends RuleBasedScanner {
 	};
 
 	public VisualGScanner(VisualGColorManager manager) {
-		IToken procInstr =
-			new Token(
-				new TextAttribute(
-					manager.getColor(IVisualGColorConstants.PROC_INSTR)));
+		Color color = manager.getColor(IVisualGColorConstants.RESERVED_WORD);
+		TextAttribute attribute = new TextAttribute(color);
+		IToken tokenReservedWords = new Token(attribute);
 
-		IRule[] rules = new IRule[1];
-		//Add rule for processing instructions
-//		rules[0] = new SingleLineRule("<?", "?>", procInstr);
-		// Add generic whitespace rule.
-//		rules[1] = new WhitespaceRule(new VisualGWhitespaceDetector());
-
-		WordRule wordRule = new WordRule(new IWordDetector() {
-			
-			public boolean isWordStart(char c) {
-				return Character.isLetter(c);
-			}
-			
-			public boolean isWordPart(char c) {
-				return Character.isLetter(c);
-			}
-			
-		});
+		WordRule rule = new WordRule(new VisualGWordDetector());
 		for (String word : VG_RESERVED_WORDS) {
-			wordRule.addWord(word, procInstr);
+			rule.addWord(word, tokenReservedWords);
 		}
 		
-		rules[0] = wordRule;
-		
+		IRule[] rules = new IRule[1];
+		rules[0] = rule;
 		setRules(rules);
 	}
 }
