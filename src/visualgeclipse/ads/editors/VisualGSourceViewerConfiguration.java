@@ -16,9 +16,9 @@ import org.eclipse.swt.graphics.Color;
 public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration {
 
 	private VisualGEditor mEditor;
-	private VisualGDoubleClickStrategy mDoubleClickStrategy;
 	private VisualGScanner mScanner;
 	private VisualGColorManager mColorManager;
+	private VisualGDoubleClickStrategy mDoubleClickStrategy;
 
 	public VisualGSourceViewerConfiguration(VisualGEditor editor, VisualGColorManager colorManager) {
 		this.mEditor = editor;
@@ -26,6 +26,7 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		createScanner();
 	}
 	
+	@Override
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
 		return new String[] {
 			IDocument.DEFAULT_CONTENT_TYPE,
@@ -34,6 +35,7 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 			VisualGPartitionScanner.VG_RESERVED_WORD };
 	}
 	
+	@Override
 	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer, String contentType) {
 		if (mDoubleClickStrategy == null) {
 			mDoubleClickStrategy = new VisualGDoubleClickStrategy();
@@ -42,25 +44,14 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		return mDoubleClickStrategy;
 	}
 
-	private void createScanner() {
-		if (mScanner == null) {
-			mScanner = new VisualGScanner(mColorManager);
-			mScanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-						mColorManager.getColor(IVisualGColorConstants.DEFAULT))));
-		}
-	}
-
 	@Override
 	public IReconciler getReconciler(ISourceViewer sourceViewer) {
-        VisualGReconcilingStrategy strategy = new VisualGReconcilingStrategy();
-        strategy.setEditor(mEditor);
-        
+        VisualGReconcilingStrategy strategy = new VisualGReconcilingStrategy(mEditor);
         MonoReconciler reconciler = new MonoReconciler(strategy, false);
         return reconciler;
 	}
 	
+	@Override
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
 
@@ -83,4 +74,14 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		return reconciler;
 	}
 
+	private void createScanner() {
+		if (mScanner == null) {
+			mScanner = new VisualGScanner(mColorManager);
+			mScanner.setDefaultReturnToken(
+				new Token(
+					new TextAttribute(
+						mColorManager.getColor(IVisualGColorConstants.DEFAULT))));
+		}
+	}
+	
 }

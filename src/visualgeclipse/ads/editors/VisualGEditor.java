@@ -1,7 +1,7 @@
 package visualgeclipse.ads.editors;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
@@ -57,13 +57,13 @@ public class VisualGEditor extends TextEditor {
 		super.dispose();
 	}
 
-	public void updateFoldingStructure(ArrayList<Position> positions) {
-		Annotation[] annotations = new Annotation[positions.size()];
+	public void updateFoldingStructure(List<Position> mPositions) {
+		Annotation[] annotations = new Annotation[mPositions.size()];
 		HashMap<ProjectionAnnotation, Position> newAnnotations = new HashMap<ProjectionAnnotation, Position>();
 
-		for (int i = 0; i < positions.size(); i++) {
+		for (int i = 0; i < mPositions.size(); i++) {
 			ProjectionAnnotation annotation = new ProjectionAnnotation();
-			newAnnotations.put(annotation, positions.get(i));
+			newAnnotations.put(annotation, mPositions.get(i));
 			annotations[i] = annotation;
 		}
 

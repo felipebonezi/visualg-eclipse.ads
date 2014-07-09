@@ -14,22 +14,15 @@ import org.eclipse.swt.widgets.Display;
 
 public class VisualGReconcilingStrategy implements IReconcilingStrategy {
 
-	private static final int EOR_TAG = 4;
-	
 	private IDocument mDocument;
 	private VisualGEditor mEditor;
-
-	private final ArrayList<Position> mPositions = new ArrayList<Position>();
+	private List<Position> mPositions;
 	private int mOffset;
 	private int mRangeEnd;
-	private int cNextPos;
 
-	public VisualGEditor getEditor() {
-		return mEditor;
-	}
-
-	public void setEditor(VisualGEditor mEditor) {
-		this.mEditor = mEditor;
+	public VisualGReconcilingStrategy(VisualGEditor editor) {
+		this.mEditor = editor;
+		this.mPositions = new ArrayList<Position>();
 	}
 
 	@Override
@@ -51,7 +44,7 @@ public class VisualGReconcilingStrategy implements IReconcilingStrategy {
 	public void setProgressMonitor(IProgressMonitor monitor) {
 	}
 
-	public void initialReconcile() {
+	private void initialReconcile() {
 		mOffset = 0;
 		mRangeEnd = mDocument.getLength();
 		calculatePositions();
@@ -59,7 +52,6 @@ public class VisualGReconcilingStrategy implements IReconcilingStrategy {
 
 	private void calculatePositions() {
 		mPositions.clear();
-		cNextPos = mOffset;
 
 		List<String> words = Arrays.asList(mDocument.get().split(" "));
 		recursiveTokens(words);
@@ -76,13 +68,8 @@ public class VisualGReconcilingStrategy implements IReconcilingStrategy {
 		return 0;
 	}
 
-	private void emitPosition(int startOffset, int length) {
+	private void rangePosition(int startOffset, int length) {
 		mPositions.add(new Position(startOffset, length));
 	}
-
-	private int classifyTag(String word) {
-		return EOR_TAG;
-	}
-
 
 }
