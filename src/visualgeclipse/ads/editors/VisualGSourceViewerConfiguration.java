@@ -10,15 +10,16 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-public class VisualGConfiguration extends SourceViewerConfiguration {
+public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration {
+
 	private VisualGDoubleClickStrategy doubleClickStrategy;
-	//private XMLTagScanner tagScanner; 
 	private VisualGScanner scanner;
 	private VisualGColorManager colorManager;
 
-	public VisualGConfiguration(VisualGColorManager colorManager) {
+	public VisualGSourceViewerConfiguration(VisualGColorManager colorManager) {
 		this.colorManager = colorManager;
 	}
+	
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
 		return new String[] {
 			IDocument.DEFAULT_CONTENT_TYPE,
@@ -26,6 +27,7 @@ public class VisualGConfiguration extends SourceViewerConfiguration {
 			VisualGPartitionScanner.VG_STRING,
 			VisualGPartitionScanner.VG_RESERVED_WORD };
 	}
+	
 	public ITextDoubleClickStrategy getDoubleClickStrategy(
 		ISourceViewer sourceViewer,
 		String contentType) {
@@ -44,17 +46,6 @@ public class VisualGConfiguration extends SourceViewerConfiguration {
 		}
 		return scanner;
 	}
-	
-//	protected XMLTagScanner getXMLTagScanner() {
-//		if (tagScanner == null) {
-//			tagScanner = new XMLTagScanner(colorManager);
-//			tagScanner.setDefaultReturnToken(
-//				new Token(
-//					new TextAttribute(
-//						colorManager.getColor(IXMLColorConstants.TAG))));
-//		}
-//		return tagScanner;
-//	}
 
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
@@ -71,7 +62,7 @@ public class VisualGConfiguration extends SourceViewerConfiguration {
 		NonRuleBasedDamagerRepairer ndr =
 			new NonRuleBasedDamagerRepairer(
 				new TextAttribute(
-					colorManager.getColor(IVisualGColorConstants.XML_COMMENT)));
+					colorManager.getColor(IVisualGColorConstants.COMMENT)));
 		reconciler.setDamager(ndr, VisualGPartitionScanner.VG_COMMENT);
 		reconciler.setRepairer(ndr, VisualGPartitionScanner.VG_COMMENT);
 
