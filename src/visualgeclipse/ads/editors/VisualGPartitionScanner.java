@@ -9,14 +9,11 @@ public class VisualGPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String VG_RESERVED_WORD = "__vg_reserved_word";
 	
 	public VisualGPartitionScanner() {
-		IToken visualGComment = new Token(VG_COMMENT);
 		IToken visualGstring = new Token(VG_STRING);
-		IToken visualGReservedWord = new Token(VG_RESERVED_WORD);
 
 		IPredicateRule[] rules = new IPredicateRule[1];
 
-		rules[0] = new MultiLineRule("<!--", "-->", visualGComment);
-		//rules[1] = new TagRule(string);
+		rules[0] = new SingleLineRule("\"", "\"", visualGstring, '\\');
 
 		setPredicateRules(rules);
 	}

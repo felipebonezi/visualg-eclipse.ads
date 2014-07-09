@@ -62,9 +62,9 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		NonRuleBasedDamagerRepairer ndr =
 			new NonRuleBasedDamagerRepairer(
 				new TextAttribute(
-					colorManager.getColor(IVisualGColorConstants.COMMENT)));
-		reconciler.setDamager(ndr, VisualGPartitionScanner.VG_COMMENT);
-		reconciler.setRepairer(ndr, VisualGPartitionScanner.VG_COMMENT);
+					colorManager.getColor(IVisualGColorConstants.STRING)));
+		reconciler.setDamager(ndr, VisualGPartitionScanner.VG_STRING);
+		reconciler.setRepairer(ndr, VisualGPartitionScanner.VG_STRING);
 
 		return reconciler;
 	}
