@@ -7,9 +7,22 @@ import org.eclipse.swt.graphics.Color;
 public class VisualGScanner extends RuleBasedScanner {
 	
 	private static final String[] VG_RESERVED_WORDS = {
-			"algoritmo",
-			"inicio",
-			"fimalgoritmo"
+		"aleatório", "enquanto", "funcao", "para", 
+		"algoritmo", "entao", "inicio", "passo", 
+		"arquivo", "escolha", "int", "pausa", 
+		"asc", "escreva", "inteiro", "pos", 
+		"ate", "escreval", "interrompa", "real", 
+		"carac", "faca", "leia", "procedimento", 
+		"caracpnum", "falso", "limpatela", "repita", 
+		"caractere", "fimalgoritmo", "logico", "retorne", 
+		"caso", "fimenquanto", "maiusc", "se", 
+		"compr", "fimescolha", "minusc", "senao", 
+		"copia", "fimfuncao", "mod", "timer", 
+		"cronometro", "fimpara", "nao", "var", 
+		"debug", "fimprocedimento", "numpcarac", "vetor", 
+		"e", "fimrepita", "ou", "verdadeiro", 
+		"eco", "fimse", "outrocaso", "xou"
+			
 	};
 
 	public VisualGScanner(VisualGColorManager manager) {
