@@ -5,7 +5,7 @@ import org.eclipse.jface.text.*;
 public class VisualGDoubleClickStrategy implements ITextDoubleClickStrategy {
 	
 	private ITextViewer mText;
-
+	//Palavra ou comentário são selecionados ao clicarmos duas vezes
 	public void doubleClicked(ITextViewer part) {
 		int pos = part.getSelectedRange().x;
 

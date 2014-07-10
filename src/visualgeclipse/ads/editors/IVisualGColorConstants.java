@@ -2,6 +2,7 @@ package visualgeclipse.ads.editors;
 
 import org.eclipse.swt.graphics.RGB;
 
+//Definição de cores para determinados tipos de palavras
 public interface IVisualGColorConstants {
 	RGB COMMENT = new RGB(128, 64, 128);
 	RGB RESERVED_WORD = new RGB(128, 0, 0);

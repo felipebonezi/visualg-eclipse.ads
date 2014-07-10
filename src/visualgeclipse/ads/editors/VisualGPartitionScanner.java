@@ -13,9 +13,9 @@ public class VisualGPartitionScanner extends RuleBasedPartitionScanner {
 		IToken visualGComment = new Token(VG_COMMENT);
 
 		IPredicateRule[] rules = new IPredicateRule[2];
-
-		rules[0] = new SingleLineRule("\"", "\"", visualGstring, '\\');
-		rules[1] = new SingleLineRule("//", null, visualGComment, '\\');
+		//Definição das regras para os comentários e Strings
+		rules[0] = new SingleLineRule("\"", "\"", visualGstring, '\\'); //String: expressões arrodeadas por (")
+		rules[1] = new SingleLineRule("//", null, visualGComment, '\\');//Comentário: expressões que começam com (//)
 
 		setPredicateRules(rules);
 	}

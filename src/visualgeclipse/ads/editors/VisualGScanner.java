@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.Color;
 
 public class VisualGScanner extends RuleBasedScanner {
 	
+	//Lista de todas as palavras reservadas
 	private static final String[] VG_RESERVED_WORDS = {
 		"aleatório", "enquanto", "funcao", "para", 
 		"algoritmo", "entao", "inicio", "passo", 
@@ -26,6 +27,7 @@ public class VisualGScanner extends RuleBasedScanner {
 	};
 
 	public VisualGScanner(VisualGColorManager manager) {
+		//Detecção de cor associada ao tipo da palavra, nesse caso, palavras reservadas o VisualG
 		Color color = manager.getColor(IVisualGColorConstants.RESERVED_WORD);
 		TextAttribute attribute = new TextAttribute(color);
 		IToken tokenReservedWords = new Token(attribute);
