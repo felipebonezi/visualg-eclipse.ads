@@ -22,8 +22,7 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 
 	public VisualGSourceViewerConfiguration(VisualGEditor editor, VisualGColorManager colorManager) {
 		this.mEditor = editor;
-		this.mColorManager = colorManager;
-		createScanner();
+		this.mColorManager = colorManager;		
 	}
 	
 	@Override
@@ -55,7 +54,7 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
 		PresentationReconciler reconciler = new PresentationReconciler();
 
-		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(mScanner);
+		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		
@@ -74,7 +73,8 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 		return reconciler;
 	}
 
-	private void createScanner() {
+	// Lazy evoluation.
+	private VisualGScanner getScanner() {
 		if (mScanner == null) {
 			mScanner = new VisualGScanner(mColorManager);
 			mScanner.setDefaultReturnToken(
@@ -82,6 +82,7 @@ public class VisualGSourceViewerConfiguration extends SourceViewerConfiguration 
 					new TextAttribute(
 						mColorManager.getColor(IVisualGColorConstants.DEFAULT))));
 		}
+		return mScanner;
 	}
 	
 }
